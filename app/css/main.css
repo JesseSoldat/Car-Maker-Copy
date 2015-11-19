@@ -6390,4 +6390,16 @@ th.hide-for-touch {
 body {
   background: #e2ebf3; }
 
+.formWrapper {
+  width: 60%;
+  margin: 10% auto; }
+
+.panel {
+  width: 30%;
+  margin: 3% 1%;
+  float: left;
+  border: 3px solid black;
+  border-radius: 2px;
+  box-shadow: 5px 5px 5px black; }
+
 /*# sourceMappingURL=main.css.map */

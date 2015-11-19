@@ -1,6 +1,7 @@
 let HomeController = function() {
   
-  
+  let vm = this;
+  vm.title = "Home Page";
 
 };
 
