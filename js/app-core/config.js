@@ -12,6 +12,21 @@ let config = function($urlRouterProvider, $stateProvider) {
       controller: 'HomeController as vm',
       templateUrl: 'templates/app-layout/home.tpl.html'
     })
+    .state('root.cars', {
+      url: '/cars',
+      controller: 'CarsController as vm',
+      templateUrl: 'templates/app-cars/cars.tpl.html'
+    })
+    .state('root.addCar', {
+      url: '/cars/add',
+      controller: 'CarsAddController as vm',
+      templateUrl: 'templates/app-cars/cars-add.tpl.html'
+    })
+    .state('root.singleCar', {
+      url: '/cars/:id',
+      controller: 'CarSingleController as vm',
+      templateUrl: 'templates/app-cars/car-single.tpl.html'
+    })
   ;
   
 
