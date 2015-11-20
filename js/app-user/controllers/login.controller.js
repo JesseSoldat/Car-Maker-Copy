@@ -4,7 +4,10 @@ let loginController = function(UserService) {
   this.login = login;
 
   function login(userObj) {
-    console.log(userObj);
+    // console.log(userObj);
+    UserService.login(userObj).then( (res) => {
+      UserService.storeAuth(res.data);
+    })
   }
 
 };

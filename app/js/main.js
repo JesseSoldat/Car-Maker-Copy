@@ -332,7 +332,10 @@ var loginController = function loginController(UserService) {
   this.login = login;
 
   function login(userObj) {
-    console.log(userObj);
+    // console.log(userObj);
+    UserService.login(userObj).then(function (res) {
+      UserService.storeAuth(res.data);
+    });
   }
 };
 
@@ -342,26 +345,29 @@ exports['default'] = loginController;
 module.exports = exports['default'];
 
 },{}],15:[function(require,module,exports){
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var RegisterController = function RegisterController() {
+var RegisterController = function RegisterController(UserService) {
 
   var vm = this;
 
   vm.register = register;
 
-  function register(userobj) {
-    console.log(userobj);
+  function register(user) {
+    // console.log(userobj);
+    UserService.register(user).then(function (res) {
+      UserService.storeAuth(res.data);
+    });
   }
 };
 
-RegisterController.$inject = [];
+RegisterController.$inject = ['UserService'];
 
-exports["default"] = RegisterController;
-module.exports = exports["default"];
+exports['default'] = RegisterController;
+module.exports = exports['default'];
 
 },{}],16:[function(require,module,exports){
 'use strict';
@@ -394,10 +400,42 @@ Object.defineProperty(exports, '__esModule', {
 });
 var UserService = function UserService(PARSE, $http, $state, $cookies) {
 
+  this.register = register;
+  this.login = login;
+  this.storeAuth = storeAuth;
   this.checkAuth = checkAuth;
+
+  function register(userObj) {
+    return $http.post(PARSE.URL + 'users', userObj, PARSE.CONFIG);
+  }
+
+  function login(userObj) {
+    return $http.get(PARSE.URL + 'login', {
+      headers: PARSE.CONFIG.headers,
+      params: userObj
+    });
+  }
+
+  function storeAuth(user) {
+    $cookies.put('car-tracker-auth', user.sessionToken);
+    $cookies.put('car-tracker-user', user.objectId);
+    setHeaders(user.sessionToken);
+
+    $state.go('root.home');
+  }
 
   function checkAuth() {
     // console.log('checkAuth');
+    var check = $cookies.get('car-tracker-auth');
+    if (check) {
+      setHeaders(check);
+    } else {
+      $state.go('root.login');
+    }
+  }
+
+  function setHeaders(token) {
+    PARSE.CONFIG.headers['X-Parse-Session-Token'] = token;
   }
 };
 
