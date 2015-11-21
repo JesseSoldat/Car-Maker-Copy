@@ -6,8 +6,11 @@ import CarsAddController from './controllers/cars-add.controller';
 import CarSingleController from './controllers/car-single.controller';
 
 import CarService from './services/car.service';
+import MainService from './services/maintenance.service';
+import UploadService from './services/upload.service';
 
 import jesseCar from './directives/car.directive';
+import addImage from './directives/addImage.directive';
 
 
 angular
@@ -15,6 +18,11 @@ angular
   .controller('CarsController', CarsController)
   .controller('CarsAddController', CarsAddController)
   .controller('CarSingleController', CarSingleController)
+
   .service('CarService', CarService)
+  .service('MainService', MainService)
+  .service('UploadService', UploadService)
+  
   .directive('jesseCar', jesseCar)
+  .directive('addImage', addImage)
 ;

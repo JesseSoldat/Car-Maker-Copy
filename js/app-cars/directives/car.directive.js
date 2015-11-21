@@ -7,7 +7,7 @@ let jesseCar = function($state, CarService) {
       car: '='
     },
     template: `
-        <div class='panel'>
+        <div class='panel' ng-click="vm.clicked(car)">
           <h5>{{car.name}}</h5>
           <p ng-show="car.fuzzydice">Has fuzzydice</p>
           <p>{{car.year}} {{car.make}} {{car.model}}</p>
@@ -18,6 +18,11 @@ let jesseCar = function($state, CarService) {
     controller: 'CarsController as vm',
 
     link: function(scope, element, attrs) {
+      // console.log(scope);
+      // console.log(element);
+      element.on('click', function() {
+        $state.go('root.singleCar', {id: scope.car.objectId});
+      });
 
   }
 

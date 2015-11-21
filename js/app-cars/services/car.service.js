@@ -6,10 +6,24 @@ let CarService = function($http, PARSE) {
 
   this.getAllCars      = getAllCars;
   this.addCar          = addCar;
+  this.getCar          = getCar;
+  this.fuzzydice       = true;
+  this.toggleFuzzy     = toggleFuzzy;
 
+
+  function toggleFuzzy(carObj) {
+    console.log(carObj);
+    carObj.fuzzydice = carObj.fuzzydice ? false : true;
+    return $http.put(url + '/' + carObj.objectId, carObj, PARSE.CONFIG);
+  }
   //GET all cars
   function getAllCars() {
     return $http.get(url, PARSE.CONFIG);
+  }
+
+  //GET a single car
+  function getCar(id) {
+    return $http.get(url + '/' + id, PARSE.CONFIG);
   }
 
   //POST a car
