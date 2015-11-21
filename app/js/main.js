@@ -39,7 +39,9 @@ var CarSingleController = function CarSingleController(CarService, $stateParams,
     // console.log('showForm');
     vm.showImageUpload = vm.showImageUpload ? false : true;
   }
-  function uploadImage(data) {}
+  function uploadImage(data) {
+    // console.log(data);
+  }
 };
 
 CarSingleController.$inject = ['CarService', '$stateParams', 'MainService'];
@@ -119,7 +121,16 @@ var addImage = function addImage(CarService, UploadService) {
       car: '='
     },
     templateUrl: 'templates/app-cars/upload.tpl.html',
-    link: function link(scope, element, attrs) {}
+    link: function link(scope, element, attrs) {
+      element.on('submit', function () {
+        var file = element.find('input')[0].files[0];
+        // console.log(file);
+        UploadService.upload(file).then(function (res) {
+          // console.log(res);
+          CarService.addImage(res.data.upload.file_url, scope.car).then(function (res) {});
+        });
+      });
+    }
   };
 };
 
@@ -220,7 +231,8 @@ var CarService = function CarService($http, PARSE) {
   this.addCar = addCar;
   this.getCar = getCar;
   this.fuzzydice = true;
-  this.toggleFuzzy = toggleFuzzy;
+
+  this.addImage = addImage;
 
   function toggleFuzzy(carObj) {
     console.log(carObj);
@@ -251,6 +263,11 @@ var CarService = function CarService($http, PARSE) {
     var c = new Car(carObj);
 
     return $http.post(url, c, PARSE.CONFIG);
+  }
+
+  function addImage(imageUrl, car) {
+    car.image = imageUrl;
+    return $http.put(url + '/' + car.objectId, car, PARSE.CONFIG);
   }
 };
 
@@ -292,7 +309,18 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var UploadService = function UploadService($http, FILESERVER) {};
+var UploadService = function UploadService($http, FILESERVER) {
+
+  this.upload = upload;
+
+  function upload(file) {
+    console.log(file);
+    var formData = new FormData();
+    formData.append('upload', file);
+
+    return $http.post(FILESERVER.URL, formData, FILESERVER.CONFIG);
+  }
+};
 
 UploadService.$inject = ['$http', 'FILESERVER'];
 

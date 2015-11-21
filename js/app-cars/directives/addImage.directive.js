@@ -8,9 +8,19 @@ let addImage = function(CarService, UploadService) {
     },
     templateUrl: 'templates/app-cars/upload.tpl.html',
     link: function(scope, element, attrs) {
+      element.on('submit', function() {
+        let file = element.find('input')[0].files[0];
+        // console.log(file);
+        UploadService.upload(file).then( (res) => {
+          // console.log(res);
+          CarService.addImage(res.data.upload.file_url, scope.car).then( (res) => {
+
+          });
+        });
+      });
 
     }
-  }
+  };
 
 };
 

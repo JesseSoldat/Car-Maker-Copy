@@ -36,7 +36,7 @@ let CarSingleController = function(CarService, $stateParams, MainService) {
 
   }
   function uploadImage(data) {
-
+    // console.log(data);
   }
   
 

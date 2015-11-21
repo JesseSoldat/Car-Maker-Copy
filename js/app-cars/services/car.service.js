@@ -8,7 +8,8 @@ let CarService = function($http, PARSE) {
   this.addCar          = addCar;
   this.getCar          = getCar;
   this.fuzzydice       = true;
-  this.toggleFuzzy     = toggleFuzzy;
+  
+  this.addImage        = addImage;
 
 
   function toggleFuzzy(carObj) {
@@ -40,6 +41,11 @@ let CarService = function($http, PARSE) {
     let c = new Car(carObj);
 
     return $http.post(url, c, PARSE.CONFIG);
+  }
+
+  function addImage(imageUrl, car) {
+    car.image = imageUrl;
+    return $http.put(url + '/' + car.objectId, car, PARSE.CONFIG);
   }
   
 
