@@ -1,6 +1,6 @@
 ## Welcome to My Project
 
-> I am your Readme.md file, you should probably update me.
+Took a project done during class and tried my best to replicate it for practice.  
 
 
 ## Usage
